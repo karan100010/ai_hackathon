@@ -32,11 +32,13 @@ class Workflow():
         self.astrisk.play_audio("sound/goodbye.wav")
         self.astrisk.hangup()
         x=self.transcriber("sound/record.wav")
+        added_prompt="you are a responder to a grivanace call and the caller has recorded a message for you. User: "
+        end_prompt=".According to this message which of the four catagories describe the message best? catagories are: 1.Road related 2.Water related 3.Electricity related 4.Sanitationrelated 5.Other resposnd in the end of the message with cat: <catagory number>"
         print(x)
         response = openai.Completion.create(
             engine="davinci",
-            prompt=x,
-            max_tokens=150
+            prompt=added_prompt+" "+x+end_prompt,
+            max_tokens=500
         )
         print(response.choices[0].text.strip())
 
